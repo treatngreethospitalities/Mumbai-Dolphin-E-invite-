@@ -414,3 +414,40 @@ footer img { width: 80px; margin: 0 auto; border-radius: 8%; opacity: .7; }
 @keyframes hintBounce { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(6px); } }
 @keyframes hintIn { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
 @media (prefers-reduced-motion: reduce) { .swipe-hint svg { animation: none; } }
+
+
+/* ---------- Opening screen: tap anywhere ---------- */
+.intro { cursor: pointer; }
+.intro-tap { margin-top: 18px; font-size: .72rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: rgba(255,255,255,.6); animation: tapPulse 2s ease-in-out infinite; }
+@keyframes tapPulse { 0%, 100% { opacity: .35; } 50% { opacity: .95; } }
+@media (prefers-reduced-motion: reduce) { .intro-tap { animation: none; } }
+
+
+/* music button pulses while waiting for the first touch (sound is still off) */
+.music-btn.waiting { animation: musicPulse 1.8s ease-out infinite; }
+@keyframes musicPulse {
+  0%   { box-shadow: 0 6px 20px rgba(0,0,0,.4), 0 0 0 0 rgba(69,214,255,.55); }
+  100% { box-shadow: 0 6px 20px rgba(0,0,0,.4), 0 0 0 16px rgba(69,214,255,0); }
+}
+@media (prefers-reduced-motion: reduce) { .music-btn.waiting { animation: none; } }
+
+
+/* ---------- Instagram / Watch Live links ---------- */
+.btn-icon { display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
+.social-link {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: 28px;
+  padding: 12px 24px; border-radius: 999px; text-decoration: none;
+  font-size: .9rem; font-weight: 600; letter-spacing: .04em; color: #fff;
+  border: 1px solid rgba(69,214,255,.45); background: rgba(255,255,255,.04);
+  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+}
+.social-link:hover { border-color: var(--cyan); background: rgba(255,255,255,.1); }
+.social-link:active { transform: scale(.98); }
+.social-link svg { color: var(--cyan); }
+.social-link.pink { border-color: rgba(225,80,127,.6); }
+.social-link.pink svg { color: var(--pink); }
+.social-link.pink:hover { border-color: var(--pink); }
+a.partner-box { display: block; text-decoration: none; transition: transform .2s ease; }
+a.partner-box:hover { transform: translateY(-2px); }
+.foot-ig { display: inline-flex; margin-top: 18px; color: rgba(255,255,255,.6); transition: color .2s ease; }
+.foot-ig:hover { color: var(--cyan); }

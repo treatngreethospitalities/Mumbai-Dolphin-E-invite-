@@ -46,7 +46,17 @@ const intro = document.getElementById("intro");
 const main = document.getElementById("main");
 const openBtn = document.getElementById("openBtn");
 
-openBtn.addEventListener("click", function () {
+let invitationOpened = false;
+
+// tapping ANYWHERE on the opening screen opens the invitation (and starts the song)
+intro.addEventListener("click", function (e) {
+  if (e.target.closest && e.target.closest("#musicBtn")) return;
+  openBtn.click();
+});
+
+openBtn.addEventListener("click", function (e) {
+  if (invitationOpened) return;
+  invitationOpened = true;
   playMusic();                         // makes sure the song is playing (no restart if it already is)
   main.classList.remove("hidden");     // show the invitation
   window.scrollTo(0, 0);
@@ -216,11 +226,13 @@ document.getElementById("shareBtn")?.addEventListener("click", async function ()
 
 /* =========================================================
    11. BACKGROUND MUSIC  ("Mumbai Ki Lehar")
-   - Tries to start as soon as the page loads (before "Open Invitation").
-   - Phones/browsers often block sound until the guest touches the screen, so if it is
-     blocked, the song starts on the guest's FIRST tap / touch / key press, anywhere.
-   - The round button at the top-right mutes / unmutes it.
-   - Volume: edit MUSIC_VOLUME (0 = silent, 1 = full).
+   Browsers (Chrome, Safari, WhatsApp browser) do NOT allow a web page to play sound
+   with zero interaction. So this does the maximum possible:
+     1) on load it tries to play the song with sound;
+     2) if blocked, it starts the song silently and switches the sound ON the instant the
+        guest first taps / touches / presses a key ANYWHERE on the page;
+     3) the round button (top-right, pulsing until sound is on) mutes / unmutes.
+   Volume: edit MUSIC_VOLUME (0 = silent, 1 = full).
    ========================================================= */
 const MUSIC_VOLUME = 0.7;
 const music = document.getElementById("bgMusic");
@@ -237,24 +249,23 @@ function fadeMusicIn() {
   }, 120);
 }
 
-function setMusicUI(playing) {
-  musicBtn.classList.toggle("playing", playing);
-  musicBtn.classList.toggle("muted", !playing);
-  musicBtn.setAttribute("aria-pressed", playing ? "false" : "true");
-  musicBtn.setAttribute("aria-label", playing ? "Mute music" : "Play music");
+function setMusicUI(audible) {
+  musicBtn.classList.toggle("playing", audible);
+  musicBtn.classList.toggle("muted", !audible);
+  musicBtn.classList.toggle("waiting", !audible && musicWanted);   // pulses until sound is on
+  musicBtn.setAttribute("aria-pressed", audible ? "false" : "true");
+  musicBtn.setAttribute("aria-label", audible ? "Mute music" : "Play music");
 }
 
-// returns a promise; resolves if the song is playing afterwards
+// turn the sound on (works from paused OR from silent-playing)
 function startMusic() {
-  if (!music.paused) { setMusicUI(true); return Promise.resolve(); }
+  if (!music.paused && !music.muted) { setMusicUI(true); return Promise.resolve(); }
+  const wasSilentPlaying = !music.paused;
+  music.muted = false;
+  if (wasSilentPlaying) music.currentTime = 0;     // start the song from the beginning with sound
   fadeMusicIn();
-  const p = music.play();
-  if (p && p.then) {
-    return p.then(function () { setMusicUI(true); })
-            .catch(function (err) { setMusicUI(false); throw err; });
-  }
-  setMusicUI(true);
-  return Promise.resolve();
+  return music.play().then(function () { setMusicUI(true); })
+    .catch(function (err) { music.muted = true; setMusicUI(false); throw err; });
 }
 
 // called when "Open Invitation" is tapped
@@ -262,23 +273,31 @@ function playMusic() {
   if (musicWanted) startMusic().catch(function () {});
 }
 
-// 1) try to play right away
-setMusicUI(false);
-startMusic().catch(function () {
-  // 2) blocked by the browser -> start on the guest's first touch / click / key press
-  const events = ["pointerup", "touchend", "click", "keydown"];
-  function startOnFirstTouch(e) {
-    if (e.target && e.target.closest && e.target.closest("#musicBtn")) return;   // the button has its own handler
-    if (!musicWanted) return;
-    startMusic().then(function () {
-      events.forEach(function (n) { document.removeEventListener(n, startOnFirstTouch, true); });
-    }).catch(function () {});
-  }
-  events.forEach(function (n) { document.addEventListener(n, startOnFirstTouch, true); });
+// first touch anywhere -> sound on
+const unlockEvents = ["pointerup", "touchend", "click", "keydown"];
+function unlockOnFirstTouch(e) {
+  if (e.target && e.target.closest && e.target.closest("#musicBtn")) return;   // the button has its own handler
+  if (!musicWanted) return;
+  startMusic().then(function () {
+    unlockEvents.forEach(function (n) { document.removeEventListener(n, unlockOnFirstTouch, true); });
+  }).catch(function () {});
+}
+
+// on page load: try with sound, else silent start + wait for the first touch
+musicBtn.classList.add("waiting");
+music.muted = false;
+music.volume = MUSIC_VOLUME;
+music.play().then(function () {
+  setMusicUI(true);                      // browser allowed sound straight away
+}).catch(function () {
+  music.muted = true;                    // silent autoplay is always allowed
+  music.play().catch(function () {});
+  setMusicUI(false);
+  unlockEvents.forEach(function (n) { document.addEventListener(n, unlockOnFirstTouch, true); });
 });
 
 musicBtn.addEventListener("click", function () {
-  if (music.paused) {
+  if (music.paused || music.muted) {
     musicWanted = true;
     startMusic().catch(function () {});
   } else {
@@ -293,8 +312,8 @@ musicBtn.addEventListener("click", function () {
 document.addEventListener("visibilitychange", function () {
   if (document.hidden) {
     music.pause();
-  } else if (musicWanted && music.currentTime > 0) {
-    music.play().then(function () { setMusicUI(true); }).catch(function () { setMusicUI(false); });
+  } else if (musicWanted) {
+    music.play().catch(function () {});
   }
 });
 

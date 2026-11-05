@@ -134,6 +134,7 @@
         <svg viewBox="0 0 100 100" width="18" height="18" aria-hidden="true"><use href="#vb" /></svg>
       </p>
       <button id="openBtn" class="btn btn-ghost intro-btn" type="button">Open Invitation</button>
+      <p class="intro-tap">Tap anywhere to begin &middot; sound on &#9835;</p>
     </div>
   </div>
 
@@ -192,7 +193,7 @@
 
         <div class="buttons">
           <a id="viewVenueBtn" class="btn btn-primary" href="#" target="_blank" rel="noopener">View Venue</a>
-         
+          <a id="watchLiveBtn" class="btn btn-ghost btn-icon" href="https://www.hotstar.com/in/sports" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>Watch Live on JioHotstar</a>
         </div>
       </div>
     </section>
@@ -202,9 +203,10 @@
       <p class="eyebrow pink reveal">Design Partner</p>
 
       <!-- The logo is pink on white, so it sits on a white box -->
-      <div class="partner-box reveal">
+      <a class="partner-box reveal" href="https://www.instagram.com/ptraani_clothing/" target="_blank" rel="noopener" aria-label="Ptraani on Instagram">
         <img src="images/ptraani-logo.png" width="768" height="384" alt="Ptraani by Nupur logo" loading="lazy" />
-      </div>
+      </a>
+      <a class="social-link pink reveal" href="https://www.instagram.com/ptraani_clothing/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor" stroke="none"/></svg>Follow on Instagram</a>
 
       <p class="partner-line reveal">Proud Design Partner of the Women&rsquo;s Pro Volleyball League</p>
     </section>
@@ -215,6 +217,8 @@
       <p class="closing-title reveal">Let&rsquo;s celebrate the<br /><span>future of women&rsquo;s sports.</span></p>
       <p class="closing-sub reveal">We look forward to welcoming you.</p>
 
+      <a class="social-link reveal" href="https://www.instagram.com/mumbaidolphins/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor" stroke="none"/></svg>@mumbaidolphins</a>
+
      
     </section>
 
@@ -223,13 +227,14 @@
       <hr />
       <img src="images/mumbai-dolphins-logo.jpg" width="640" height="640" alt="Mumbai Dolphins" loading="lazy" />
       <p class="foot-small">Mumbai Dolphins &middot; 11 November 2026</p>
+      <a class="foot-ig" href="https://www.instagram.com/mumbaidolphins/" target="_blank" rel="noopener" aria-label="Mumbai Dolphins on Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor" stroke="none"/></svg></a>
       <p class="credit">Made by <a href="https://treatngreet.com/" target="_blank" rel="noopener">Treat n Greet Hospitalities Pvt. Ltd.</a></p>
     </footer>
   </main>
 
   <!-- Background song: "Mumbai Ki Lehar" (starts when the guest taps Open Invitation) -->
-  <audio id="bgMusic" src="audio/mumbai-ki-lehar.mp3" loop preload="auto"></audio>
-  <button id="musicBtn" class="music-btn show" type="button" aria-label="Play music" aria-pressed="true">
+  <audio id="bgMusic" src="audio/mumbai-ki-lehar.mp3" autoplay loop preload="auto" playsinline></audio>
+  <button id="musicBtn" class="music-btn show" type="button" aria-label="Mute music" aria-pressed="false">
     <svg class="ic-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
     <svg class="ic-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 6"/><path d="m21 9-5 6"/></svg>
     <span class="music-bars" aria-hidden="true"><i></i><i></i><i></i></span>
