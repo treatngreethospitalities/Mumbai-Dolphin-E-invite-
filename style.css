@@ -160,7 +160,7 @@ hr  { border: 0; height: 1px; margin: 34px 0; background: linear-gradient(90deg,
 }
 .ball-y { animation: ballY 6.5s linear 2.4s infinite; }
 .ball   { width: 34px; height: 34px; display: block; animation: ballSpin 6.5s linear 2.4s infinite;
-          filter: drop-shadow(0 0 10px rgba(69,214,255,.7)); }
+          filter: drop-shadow(0 6px 8px rgba(0,0,0,.45)) drop-shadow(0 0 10px rgba(255,255,255,.25)); }
 
 @keyframes ballX {
   0%   { transform: translateX(-60px); opacity: 0; }
@@ -183,7 +183,7 @@ hr  { border: 0; height: 1px; margin: 34px 0; background: linear-gradient(90deg,
 
 .side-ball {
   position: absolute; height: auto; aspect-ratio: 1;
-  filter: drop-shadow(0 0 8px rgba(69,214,255,.55));
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,.4));
   animation: floatBall 9s ease-in-out infinite alternate;
 }
 @keyframes floatBall {

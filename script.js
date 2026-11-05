@@ -132,7 +132,7 @@ function showToast(message) {
 /* =========================================================
    8. SAVE THE DATE  (downloads a calendar .ics file)
    ========================================================= */
-document.getElementById("saveDateBtn").addEventListener("click", function () {
+document.getElementById("saveDateBtn")?.addEventListener("click", function () {
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
@@ -169,7 +169,7 @@ document.getElementById("saveDateBtn").addEventListener("click", function () {
 /* =========================================================
    9. RSVP
    ========================================================= */
-document.getElementById("rsvpBtn").addEventListener("click", function () {
+document.getElementById("rsvpBtn")?.addEventListener("click", function () {
   if (RSVP_LINK) {
     window.open(RSVP_LINK, "_blank");
   } else if (RSVP_WHATSAPP) {
@@ -187,7 +187,7 @@ document.getElementById("rsvpBtn").addEventListener("click", function () {
 /* =========================================================
    10. SHARE  (phone share sheet, or copies the link)
    ========================================================= */
-document.getElementById("shareBtn").addEventListener("click", async function () {
+document.getElementById("shareBtn")?.addEventListener("click", async function () {
   const url = SITE_URL || (window.location.origin + window.location.pathname);
 
   if (navigator.share) {
