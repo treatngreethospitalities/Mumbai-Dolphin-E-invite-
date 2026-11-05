@@ -47,6 +47,7 @@ const main = document.getElementById("main");
 const openBtn = document.getElementById("openBtn");
 
 openBtn.addEventListener("click", function () {
+  playMusic();                         // the tap is what lets the browser play sound
   main.classList.remove("hidden");     // show the invitation
   window.scrollTo(0, 0);
   intro.classList.add("leaving");      // fade the opening screen out
@@ -208,5 +209,69 @@ document.getElementById("shareBtn")?.addEventListener("click", async function ()
     showToast("Invitation link copied.");
   } catch (err) {
     showToast("Could not copy. Please copy the page link manually.");
+  }
+});
+
+
+/* =========================================================
+   11. BACKGROUND MUSIC  ("Mumbai Ki Lehar")
+   Starts when the guest taps "Open Invitation" (browsers block sound before a tap).
+   The round button at the top-right mutes / unmutes it.
+   To change the volume, edit MUSIC_VOLUME (0 = silent, 1 = full).
+   ========================================================= */
+const MUSIC_VOLUME = 0.7;
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
+let musicWanted = true;      // false once the guest mutes it themselves
+let fadeTimer;
+
+function fadeMusicIn() {
+  clearInterval(fadeTimer);
+  music.volume = 0;
+  fadeTimer = setInterval(function () {
+    music.volume = Math.min(MUSIC_VOLUME, music.volume + 0.05);
+    if (music.volume >= MUSIC_VOLUME) clearInterval(fadeTimer);
+  }, 120);
+}
+
+function setMusicUI(playing) {
+  musicBtn.classList.toggle("playing", playing);
+  musicBtn.classList.toggle("muted", !playing);
+  musicBtn.setAttribute("aria-pressed", playing ? "false" : "true");
+  musicBtn.setAttribute("aria-label", playing ? "Mute music" : "Play music");
+}
+
+function playMusic() {
+  musicBtn.classList.add("show");
+  musicWanted = true;
+  fadeMusicIn();
+  const p = music.play();
+  if (p && p.catch) {
+    p.then(function () { setMusicUI(true); })
+     .catch(function () { setMusicUI(false); });   // blocked: guest can tap the button
+  } else {
+    setMusicUI(true);
+  }
+}
+
+musicBtn.addEventListener("click", function () {
+  if (music.paused) {
+    musicWanted = true;
+    fadeMusicIn();
+    music.play().then(function () { setMusicUI(true); }).catch(function () {});
+  } else {
+    musicWanted = false;
+    clearInterval(fadeTimer);
+    music.pause();
+    setMusicUI(false);
+  }
+});
+
+// pause when the guest switches app / tab, resume when they come back
+document.addEventListener("visibilitychange", function () {
+  if (document.hidden) {
+    music.pause();
+  } else if (musicWanted && musicBtn.classList.contains("show")) {
+    music.play().catch(function () { setMusicUI(false); });
   }
 });
