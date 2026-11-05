@@ -494,5 +494,9 @@ a.partner-box:hover { transform: translateY(-2px); }
 /* ---------- Watch Live button: zoom in / zoom out ---------- */
 .btn-hotstar { animation: hsGlow 2.4s ease-out infinite, hsZoom 1.6s ease-in-out infinite; }
 .btn-hotstar:hover { animation-play-state: running, paused; }
-@keyframes hsZoom { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+@keyframes hsZoom { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.16); } }
 @media (prefers-reduced-motion: reduce) { .btn-hotstar { animation: none; } }
+
+
+/* more space between View Venue and Watch Live (also leaves room for the bigger zoom) */
+.buttons { gap: 26px; }
