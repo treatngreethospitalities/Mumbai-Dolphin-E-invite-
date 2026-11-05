@@ -489,3 +489,10 @@ a.partner-box:hover { transform: translateY(-2px); }
 .btn-venue:hover { background: linear-gradient(115deg, #7be4ff 0%, #3b8cff 100%); transform: translateY(-2px); }
 @keyframes venueGlow { 0% { box-shadow: 0 12px 38px -8px rgba(31,122,255,.8), 0 0 0 0 rgba(69,214,255,.55); } 100% { box-shadow: 0 12px 38px -8px rgba(31,122,255,.8), 0 0 0 16px rgba(69,214,255,0); } }
 @media (prefers-reduced-motion: reduce) { .btn-venue { animation: none; } }
+
+
+/* ---------- Watch Live button: zoom in / zoom out ---------- */
+.btn-hotstar { animation: hsGlow 2.4s ease-out infinite, hsZoom 1.6s ease-in-out infinite; }
+.btn-hotstar:hover { animation-play-state: running, paused; }
+@keyframes hsZoom { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+@media (prefers-reduced-motion: reduce) { .btn-hotstar { animation: none; } }
