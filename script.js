@@ -18,6 +18,7 @@ const EVENT_TIME_LABEL = "3:00 PM onwards";
 
 // TODO: check these two against the District event page
 const VENUE_NAME = "Ekana Indoor Stadium";
+const VENUE_DISPLAY = "Ekana Indoor Stadium, Lucknow";   // what is written on the page
 const VENUE_ADDRESS = "Ekana Sportz City, Sector 7, Gomti Nagar Extension, Amar Shaheed Path, Lucknow, Uttar Pradesh 226010";
 
 // Calendar times (India time). End time is not published, so 3 hours is a placeholder – change it.
@@ -34,8 +35,8 @@ const COUNTDOWN_TARGET = new Date("2026-11-11T15:00:00+05:30");
 const MAP_LINK = "https://www.google.com/maps/search/?api=1&query=" +
   encodeURIComponent(VENUE_NAME + ", " + VENUE_ADDRESS);
 
-document.getElementById("venueName").textContent = VENUE_NAME;
-document.getElementById("venueAddress").textContent = VENUE_ADDRESS;
+document.getElementById("venueName").textContent = VENUE_DISPLAY;
+document.getElementById("venueAddress").style.display = "none";   // only the stadium name + city is shown
 document.getElementById("viewVenueBtn").href = MAP_LINK;
 
 
