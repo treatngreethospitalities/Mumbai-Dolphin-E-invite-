@@ -80,7 +80,7 @@ hr  { border: 0; height: 1px; margin: 34px 0; background: linear-gradient(90deg,
 .intro {
   position: fixed; inset: 0; z-index: 50;
   display: flex; align-items: center; justify-content: center;
-  text-align: center; padding: 24px;
+  text-align: center; padding: 24px 24px 190px;
   background: radial-gradient(90% 60% at 50% 30%, var(--navy-light) 0%, var(--navy) 50%, var(--navy-dark) 85%);
 }
 .intro.leaving { animation: introOut .95s cubic-bezier(.65,0,.35,1) forwards; pointer-events: none; }
@@ -88,12 +88,12 @@ hr  { border: 0; height: 1px; margin: 34px 0; background: linear-gradient(90deg,
 
 .intro-inner { display: flex; flex-direction: column; align-items: center; }
 .intro-logo {
-  width: min(70vw, 300px); border-radius: 6%;
+  width: min(60vw, 26vh, 290px); border-radius: 6%;
   box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 30px 80px -20px rgba(31,122,255,.7);
   animation: logoReveal 1.7s cubic-bezier(.22,1,.36,1) .25s both;
 }
 .intro-badge {
-  margin-top: 40px; display: inline-flex; align-items: center; gap: 12px;
+  margin-top: 28px; display: inline-flex; align-items: center; gap: 12px;
   padding: 8px 20px; border-radius: 999px;
   border: 1px solid rgba(69,214,255,.4); background: rgba(69,214,255,.06);
   font-family: var(--font-title); font-weight: 600; font-size: .95rem;
@@ -102,12 +102,133 @@ hr  { border: 0; height: 1px; margin: 34px 0; background: linear-gradient(90deg,
 }
 .intro-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pink); }
 .intro-line {
-  margin-top: 24px; max-width: 22rem;
+  margin-top: 18px; max-width: 22rem;
   font-family: var(--font-serif); font-style: italic; font-weight: 500;
   font-size: 1.65rem; line-height: 1.3;
   animation: fadeUp 1.2s cubic-bezier(.22,1,.36,1) 1.9s both;
 }
-.intro-btn { margin-top: 40px; animation: fadeUp 1s cubic-bezier(.22,1,.36,1) 3s both; }
+.intro-btn { margin-top: 32px; animation: fadeUp 1s cubic-bezier(.22,1,.36,1) 3.2s both; }
+.intro-inner { position: relative; z-index: 3; }
+
+.intro-league {
+  margin-top: 20px; display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-title); font-weight: 600; font-size: .95rem;
+  letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.85);
+  animation: fadeUp 1.1s cubic-bezier(.22,1,.36,1) 2.5s both;
+}
+.intro-league svg { flex: none; }
+
+/* =========================================================
+   VOLLEYBALL SCENE  (court floor, net, flying ball)
+   ========================================================= */
+
+/* Court floor with white court lines, drawn in perspective */
+.court {
+  position: absolute; left: 50%; bottom: -6%;
+  width: 150vw; height: 62vh; max-width: 2000px;
+  transform: translateX(-50%) perspective(620px) rotateX(64deg);
+  transform-origin: 50% 100%;
+  border: 3px solid rgba(255,255,255,.2);
+  background:
+    linear-gradient(rgba(255,255,255,.2), rgba(255,255,255,.2)) 0 50% / 100% 3px no-repeat,      /* centre line */
+    linear-gradient(rgba(255,255,255,.14), rgba(255,255,255,.14)) 0 29% / 100% 2px no-repeat,    /* attack line */
+    linear-gradient(rgba(255,255,255,.14), rgba(255,255,255,.14)) 0 71% / 100% 2px no-repeat,    /* attack line */
+    linear-gradient(0deg, rgba(31,122,255,.28), rgba(31,122,255,.05));
+  -webkit-mask-image: linear-gradient(to top, #000 35%, transparent 100%);
+          mask-image: linear-gradient(to top, #000 35%, transparent 100%);
+}
+.backdrop .court { opacity: .55; }
+
+/* Net: mesh with a white tape on top, fading at the edges */
+.net {
+  position: absolute; left: 0; right: 0; bottom: 56px; height: 46px; z-index: 0;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.2) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.2) 0 1px, transparent 1px 9px);
+  border-top: 4px solid rgba(255,255,255,.6);
+  border-bottom: 2px solid rgba(255,255,255,.25);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  animation: fadeUp 1.2s ease 1s both;
+}
+
+/* Ball: outer box moves left→right, inner box makes the arc, svg spins */
+.ball-x {
+  position: absolute; left: 0; bottom: 36px; z-index: 0;
+  animation: ballX 6.5s linear 2.4s infinite;
+  opacity: 0;
+}
+.ball-y { animation: ballY 6.5s linear 2.4s infinite; }
+.ball   { width: 34px; height: 34px; display: block; animation: ballSpin 6.5s linear 2.4s infinite;
+          filter: drop-shadow(0 0 10px rgba(69,214,255,.7)); }
+
+@keyframes ballX {
+  0%   { transform: translateX(-60px); opacity: 0; }
+  6%   { opacity: 1; }
+  94%  { opacity: 1; }
+  100% { transform: translateX(calc(100vw + 30px)); opacity: 0; }
+}
+@keyframes ballY {
+  0%   { transform: translateY(0);      animation-timing-function: cubic-bezier(.3,.6,.4,1); }
+  50%  { transform: translateY(-95px); animation-timing-function: cubic-bezier(.6,0,.7,.4); }
+  100% { transform: translateY(0); }
+}
+@keyframes ballSpin { to { transform: rotate(720deg); } }
+
+
+/* =========================================================
+   SIDE DECORATIONS (floating balls, lines, vertical text)
+   ========================================================= */
+.sides { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+
+.side-ball {
+  position: absolute; height: auto; aspect-ratio: 1;
+  filter: drop-shadow(0 0 8px rgba(69,214,255,.55));
+  animation: floatBall 9s ease-in-out infinite alternate;
+}
+@keyframes floatBall {
+  from { transform: translateY(0) rotate(0deg); }
+  to   { transform: translateY(-24px) rotate(100deg); }
+}
+
+.side-big { position: absolute; height: auto; aspect-ratio: 1; opacity: .07; }
+
+.side-line, .side-text { display: none; }
+
+@media (min-width: 760px) {
+  .side-line {
+    display: block; position: absolute; top: 14%; bottom: 34%; width: 10px;
+    background: repeating-linear-gradient(180deg, rgba(255,255,255,.3) 0 1px, transparent 1px 14px);
+  }
+  .side-line.left  { left: 28px;  border-left: 1px solid rgba(255,255,255,.22); }
+  .side-line.right { right: 28px; border-right: 1px solid rgba(255,255,255,.22); }
+
+  .side-text {
+    display: block; position: absolute; top: 50%; white-space: nowrap;
+    font-family: var(--font-title); font-weight: 600; font-size: .8rem;
+    letter-spacing: .55em; text-transform: uppercase; color: rgba(255,255,255,.4);
+  }
+  .side-text.left  { left: 63px;               transform: translate(-50%, -50%) rotate(-90deg); }  /* reads bottom to top */
+  .side-text.right { left: calc(100% - 63px);  transform: translate(-50%, -50%) rotate(90deg); }   /* reads top to bottom */
+}
+
+/* net posts at both ends of the net (opening screen) */
+.post {
+  position: absolute; bottom: 50px; width: 7px; height: 120px; z-index: 0; border-radius: 3px;
+  background: repeating-linear-gradient(180deg, var(--pink) 0 14px, #fff 14px 28px);
+  box-shadow: 0 0 14px rgba(225,80,127,.45); opacity: .9;
+}
+
+/* thin net used above the closing lines */
+.net-strip {
+  height: 34px; margin: 0 auto 40px; max-width: 420px;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.18) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.18) 0 1px, transparent 1px 8px);
+  border-top: 3px solid rgba(255,255,255,.55);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+}
 
 @keyframes logoReveal {
   from { opacity: 0; transform: scale(.88); filter: blur(14px); }
@@ -141,7 +262,7 @@ hr  { border: 0; height: 1px; margin: 34px 0; background: linear-gradient(90deg,
 }
 .divider { display: flex; align-items: center; gap: 12px; margin: 36px 0 28px; }
 .divider span { width: 48px; height: 1px; background: rgba(255,255,255,.25); }
-.divider i { width: 6px; height: 6px; transform: rotate(45deg); background: var(--pink); }
+.divider svg { flex: none; }
 
 .message { max-width: 36rem; font-family: var(--font-serif); font-size: 1.3rem; line-height: 1.55; color: rgba(255,255,255,.9); }
 .message p + p { margin-top: 20px; }
@@ -232,9 +353,16 @@ footer img { width: 80px; margin: 0 auto; border-radius: 8%; opacity: .7; }
   .partner-name { font-size: 4rem; }
 }
 
+/* very short screens: hide net + ball so nothing overlaps the text */
+@media (max-height: 580px) {
+  .net, .ball-x, .post { display: none; }
+  .intro { padding-bottom: 24px; }
+}
+
 /* ---------- Respect "reduce motion" setting ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .beam, .reveal, .intro-logo, .intro-badge, .intro-line, .intro-btn { animation: none !important; transition: none !important; }
+  .beam, .reveal, .intro-logo, .intro-badge, .intro-line, .intro-league, .intro-btn, .net, .ball-x, .ball-y, .ball, .side-ball { animation: none !important; transition: none !important; }
+  .ball-x { display: none; }
   .reveal { opacity: 1; transform: none; }
 }

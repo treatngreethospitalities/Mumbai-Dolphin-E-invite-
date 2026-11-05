@@ -22,3 +22,8 @@ DEPLOY
 
 PERSONAL LINK
   your-site.com/?guest=Mr. Sharma   ->  shows "Dear Mr. Sharma,"
+
+UPDATING GITHUB AFTER YOU CHANGE A FILE
+  Website way: open your repo -> click the file -> pencil icon (Edit) or "Add file > Upload files"
+               -> upload with the SAME file name -> "Commit changes". Vercel redeploys in ~1 minute.
+  Command way: git add .   then   git commit -m "update invitation"   then   git push

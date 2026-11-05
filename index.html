@@ -23,18 +23,99 @@
 
 <body class="locked">
 
-  <!-- Stadium light effect behind everything -->
+  <!-- Volleyball drawing (defined once, reused with <use href="#vb">) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <radialGradient id="vbShade" cx="35%" cy="30%" r="80%">
+        <stop offset="0" stop-color="#ffffff" />
+        <stop offset="1" stop-color="#cfe3ff" />
+      </radialGradient>
+    </defs>
+    <symbol id="vb" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="47" fill="url(#vbShade)" stroke="#1f7aff" stroke-width="3" />
+      <g fill="none" stroke="#1f7aff" stroke-width="3" stroke-linecap="round">
+        <path id="seam" d="M50 50 C 49 30, 40 14, 20 7" />
+        <path d="M50 50 C 49 30, 40 14, 20 7" transform="rotate(120 50 50)" />
+        <path d="M50 50 C 49 30, 40 14, 20 7" transform="rotate(240 50 50)" />
+      </g>
+      <g fill="none" stroke="#45d6ff" stroke-width="1.6" stroke-linecap="round" opacity=".8">
+        <path d="M57 54 C 58 36, 52 20, 40 10" />
+        <path d="M57 54 C 58 36, 52 20, 40 10" transform="rotate(120 50 50)" />
+        <path d="M57 54 C 58 36, 52 20, 40 10" transform="rotate(240 50 50)" />
+      </g>
+    </symbol>
+  </svg>
+
+  <!-- Stadium light effect + court floor behind everything -->
   <div class="backdrop" aria-hidden="true">
     <div class="beam beam-left"></div>
     <div class="beam beam-right"></div>
+    <div class="court"></div>
+    <div class="sides" aria-hidden="true">
+      <!-- big faint balls cropped by the screen edge -->
+      <svg class="side-big" style="left:-140px; top:24%; width:340px" viewBox="0 0 100 100"><use href="#vb" /></svg>
+      <svg class="side-big" style="right:-150px; top:40%; width:300px" viewBox="0 0 100 100"><use href="#vb" /></svg>
+
+      <!-- scoreboard-style tick lines + vertical text (shown on bigger screens) -->
+      <span class="side-line left"></span>
+      <span class="side-line right"></span>
+      <span class="side-text left">Mumbai Dolphins &middot; 11.11.2026</span>
+      <span class="side-text right">Women&rsquo;s Pro Volleyball League</span>
+
+      <!-- floating balls: change left/right, top, width, opacity or animation-duration freely -->
+      <svg class="side-ball" style="left:7%; top:12%; width:38px; opacity:.45; animation-duration:8s" viewBox="0 0 100 100"><use href="#vb" /></svg>
+      <svg class="side-ball" style="left:8%; top:58%; width:24px; opacity:.35; animation-duration:11s" viewBox="0 0 100 100"><use href="#vb" /></svg>
+      <svg class="side-ball" style="left:6%; top:42%; width:18px; opacity:.3; animation-duration:7s" viewBox="0 0 100 100"><use href="#vb" /></svg>
+      <svg class="side-ball" style="right:8%; top:17%; width:28px; opacity:.4; animation-duration:10s" viewBox="0 0 100 100"><use href="#vb" /></svg>
+      <svg class="side-ball" style="right:7%; top:50%; width:42px; opacity:.45; animation-duration:9s" viewBox="0 0 100 100"><use href="#vb" /></svg>
+      <svg class="side-ball" style="right:11%; top:66%; width:20px; opacity:.3; animation-duration:12s" viewBox="0 0 100 100"><use href="#vb" /></svg>
+    </div>
   </div>
 
   <!-- ============ 1. OPENING SCREEN ============ -->
   <div id="intro" class="intro">
+
+    <!-- Volleyball scene: court floor, net, and a ball that flies over it -->
+    <div class="court" aria-hidden="true"></div>
+    <div class="net" aria-hidden="true"></div>
+    <div class="ball-x" aria-hidden="true">
+      <div class="ball-y">
+        <svg class="ball" viewBox="0 0 100 100"><use href="#vb" /></svg>
+      </div>
+    </div>
+
+    <div class="sides" aria-hidden="true">
+      <!-- big faint balls cropped by the screen edge -->
+      <svg class="side-big" style="left:-140px; top:24%; width:340px" viewBox="0 0 100 100"><use href="#vb" /></svg>
+      <svg class="side-big" style="right:-150px; top:40%; width:300px" viewBox="0 0 100 100"><use href="#vb" /></svg>
+
+      <!-- scoreboard-style tick lines + vertical text (shown on bigger screens) -->
+      <span class="side-line left"></span>
+      <span class="side-line right"></span>
+      <span class="side-text left">Mumbai Dolphins &middot; 11.11.2026</span>
+      <span class="side-text right">Women&rsquo;s Pro Volleyball League</span>
+
+      <!-- floating balls: change left/right, top, width, opacity or animation-duration freely -->
+      <svg class="side-ball" style="left:7%; top:12%; width:38px; opacity:.45; animation-duration:8s" viewBox="0 0 100 100"><use href="#vb" /></svg>
+      <svg class="side-ball" style="left:8%; top:58%; width:24px; opacity:.35; animation-duration:11s" viewBox="0 0 100 100"><use href="#vb" /></svg>
+      <svg class="side-ball" style="left:6%; top:42%; width:18px; opacity:.3; animation-duration:7s" viewBox="0 0 100 100"><use href="#vb" /></svg>
+      <svg class="side-ball" style="right:8%; top:17%; width:28px; opacity:.4; animation-duration:10s" viewBox="0 0 100 100"><use href="#vb" /></svg>
+      <svg class="side-ball" style="right:7%; top:50%; width:42px; opacity:.45; animation-duration:9s" viewBox="0 0 100 100"><use href="#vb" /></svg>
+      <svg class="side-ball" style="right:11%; top:66%; width:20px; opacity:.3; animation-duration:12s" viewBox="0 0 100 100"><use href="#vb" /></svg>
+    </div>
+    <!-- net posts (antennas) -->
+    <span class="post" style="left:14%"></span>
+    <span class="post" style="right:14%"></span>
+
     <div class="intro-inner">
       <img class="intro-logo" src="images/mumbai-dolphins-logo.jpg" width="640" height="640" alt="Mumbai Dolphins" />
       <div class="intro-badge"><span class="dot"></span>You&rsquo;re Invited</div>
       <h1 class="intro-line">An Invitation to Witness the Beginning of a New Era</h1>
+      <p class="intro-league">
+        <svg viewBox="0 0 100 100" width="18" height="18" aria-hidden="true"><use href="#vb" /></svg>
+        Women&rsquo;s Pro Volleyball League
+        <svg viewBox="0 0 100 100" width="18" height="18" aria-hidden="true"><use href="#vb" /></svg>
+      </p>
       <button id="openBtn" class="btn btn-ghost intro-btn" type="button">Open Invitation</button>
     </div>
   </div>
@@ -49,7 +130,7 @@
       <h2 class="hero-title reveal">Grand<br />Opening<br />Ceremony</h2>
       <p class="league reveal" id="leagueName">Women&rsquo;s Pro Volleyball League</p>
 
-      <div class="divider reveal"><span></span><i></i><span></span></div>
+      <div class="divider reveal"><span></span><svg viewBox="0 0 100 100" width="26" height="26" aria-hidden="true"><use href="#vb" /></svg><span></span></div>
 
       <div class="message reveal">
         <p class="guest" id="guestLine"></p>
@@ -94,7 +175,7 @@
 
         <div class="buttons">
           <a id="viewVenueBtn" class="btn btn-primary" href="#" target="_blank" rel="noopener">View Venue</a>
-          
+          <button id="saveDateBtn" class="btn btn-ghost" type="button">Save the Date</button>
         </div>
       </div>
     </section>
@@ -114,10 +195,14 @@
 
     <!-- 6. FINAL INVITATION -->
     <section class="section closing">
+      <div class="net-strip reveal" aria-hidden="true"></div>
       <p class="closing-title reveal">Let&rsquo;s celebrate the<br /><span>future of women&rsquo;s sports.</span></p>
       <p class="closing-sub reveal">We look forward to welcoming you.</p>
 
-      
+      <div class="buttons reveal">
+        <button id="rsvpBtn" class="btn btn-primary" type="button">RSVP</button>
+        <button id="shareBtn" class="btn btn-ghost" type="button">Share Invitation</button>
+      </div>
     </section>
 
     <!-- FOOTER -->
