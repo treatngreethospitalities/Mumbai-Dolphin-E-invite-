@@ -416,11 +416,8 @@ footer img { width: 80px; margin: 0 auto; border-radius: 8%; opacity: .7; }
 @media (prefers-reduced-motion: reduce) { .swipe-hint svg { animation: none; } }
 
 
-/* ---------- Opening screen: tap anywhere ---------- */
+/* ---------- Opening screen: whole screen is tappable ---------- */
 .intro { cursor: pointer; }
-.intro-tap { margin-top: 18px; font-size: .72rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: rgba(255,255,255,.6); animation: tapPulse 2s ease-in-out infinite; }
-@keyframes tapPulse { 0%, 100% { opacity: .35; } 50% { opacity: .95; } }
-@media (prefers-reduced-motion: reduce) { .intro-tap { animation: none; } }
 
 
 /* music button pulses while waiting for the first touch (sound is still off) */
@@ -451,3 +448,44 @@ a.partner-box { display: block; text-decoration: none; transition: transform .2s
 a.partner-box:hover { transform: translateY(-2px); }
 .foot-ig { display: inline-flex; margin-top: 18px; color: rgba(255,255,255,.6); transition: color .2s ease; }
 .foot-ig:hover { color: var(--cyan); }
+
+
+/* ---------- Highlighted "Watch Live on JioHotstar" button ---------- */
+.btn-hotstar {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  padding: 16px 30px 15px; border-radius: 18px; text-decoration: none; color: #fff;
+  background: linear-gradient(115deg, #00b2ff 0%, #5b5bff 38%, #a22bff 68%, #ff0a7b 100%);
+  border: 1px solid rgba(255,255,255,.35);
+  box-shadow: 0 12px 38px -8px rgba(162,43,255,.8), 0 0 0 0 rgba(162,43,255,.55);
+  animation: hsGlow 2.4s ease-out infinite;
+  transition: transform .2s ease, filter .2s ease;
+}
+.btn-hotstar:hover { filter: brightness(1.1); transform: translateY(-2px); }
+.btn-hotstar:active { transform: scale(.98); }
+/* light sweep across the button */
+.btn-hotstar::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 40%; z-index: -1;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.35), transparent);
+  transform: skewX(-20deg); animation: hsSweep 3.6s ease-in-out infinite;
+}
+.btn-hotstar img { height: 34px; width: auto; }
+.hs-live { display: inline-flex; align-items: center; gap: 8px; font-size: .74rem; font-weight: 800; letter-spacing: .26em; text-transform: uppercase; }
+.hs-live i { width: 8px; height: 8px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 0 rgba(255,255,255,.8); animation: hsDot 1.3s ease-out infinite; }
+@keyframes hsGlow { 0% { box-shadow: 0 12px 38px -8px rgba(162,43,255,.8), 0 0 0 0 rgba(162,43,255,.55); } 100% { box-shadow: 0 12px 38px -8px rgba(162,43,255,.8), 0 0 0 16px rgba(162,43,255,0); } }
+@keyframes hsSweep { 0%, 55% { left: -60%; } 100% { left: 130%; } }
+@keyframes hsDot { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,.8); } 100% { box-shadow: 0 0 0 8px rgba(255,255,255,0); } }
+@media (prefers-reduced-motion: reduce) { .btn-hotstar, .btn-hotstar::after, .hs-live i { animation: none; } }
+
+
+/* ---------- Highlighted "View Venue" button ---------- */
+.btn-venue {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-weight: 800; border-radius: 18px; border: 1px solid rgba(255,255,255,.5);
+  background: linear-gradient(115deg, #45d6ff 0%, #1f7aff 100%); color: #fff;
+  box-shadow: 0 12px 38px -8px rgba(31,122,255,.8), 0 0 0 0 rgba(69,214,255,.55);
+  animation: venueGlow 2.4s ease-out infinite;
+}
+.btn-venue:hover { background: linear-gradient(115deg, #7be4ff 0%, #3b8cff 100%); transform: translateY(-2px); }
+@keyframes venueGlow { 0% { box-shadow: 0 12px 38px -8px rgba(31,122,255,.8), 0 0 0 0 rgba(69,214,255,.55); } 100% { box-shadow: 0 12px 38px -8px rgba(31,122,255,.8), 0 0 0 16px rgba(69,214,255,0); } }
+@media (prefers-reduced-motion: reduce) { .btn-venue { animation: none; } }
