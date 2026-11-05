@@ -243,7 +243,7 @@ hr  { border: 0; height: 1px; margin: 34px 0; background: linear-gradient(90deg,
    SECTIONS
    ========================================================= */
 .hero {
-  min-height: 100vh; padding: 80px 24px; text-align: center;
+  min-height: 100vh; padding: 80px 24px 130px; text-align: center;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
 .hero-logo {
@@ -302,7 +302,6 @@ hr  { border: 0; height: 1px; margin: 34px 0; background: linear-gradient(90deg,
 .venue-address { max-width: 22rem; margin: 12px auto 0; font-size: .95rem; line-height: 1.6; color: rgba(255,255,255,.75); }
 
 /* ---------- Design partner ---------- */
-.partner-name { margin-top: 12px; font-family: var(--font-title); font-weight: 600; font-size: 3rem; letter-spacing: .3em; text-transform: uppercase; color: #fff; }
 .partner-box {
   max-width: 420px; margin: 36px auto 0; padding: 24px; border-radius: 26px; background: #fff;
   box-shadow: 0 30px 70px -25px rgba(225,80,127,.55);
@@ -350,7 +349,6 @@ footer img { width: 80px; margin: 0 auto; border-radius: 8%; opacity: .7; }
   .big-month { font-size: 3rem; }
   .time, .venue-name { font-size: 2.4rem; }
   .countdown b { font-size: 3.4rem; }
-  .partner-name { font-size: 4rem; }
 }
 
 /* very short screens: hide net + ball so nothing overlaps the text */
@@ -399,3 +397,20 @@ footer img { width: 80px; margin: 0 auto; border-radius: 8%; opacity: .7; }
 .music-btn.muted svg { left: 0; }
 @keyframes eq { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
 @media (prefers-reduced-motion: reduce) { .music-bars i { animation: none; } }
+
+
+/* ---------- Swipe-down arrow ---------- */
+.swipe-hint {
+  position: fixed; left: 50%; bottom: 18px; z-index: 40; transform: translateX(-50%);
+  display: none; flex-direction: column; align-items: center; gap: 0;
+  background: none; border: 0; cursor: pointer; color: var(--cyan); font: inherit;
+  padding: 8px 14px; text-shadow: 0 2px 12px rgba(3,10,28,.9);
+  opacity: 0; transition: opacity .5s ease;
+}
+.swipe-hint.show { display: flex; opacity: 1; animation: hintIn .8s ease both; }
+.swipe-hint span { font-size: .72rem; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; color: rgba(255,255,255,.85); margin-bottom: 2px; }
+.swipe-hint svg { margin-top: -10px; animation: hintBounce 1.6s ease-in-out infinite; }
+.swipe-hint svg:last-of-type { animation-delay: .2s; opacity: .55; }
+@keyframes hintBounce { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(6px); } }
+@keyframes hintIn { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@media (prefers-reduced-motion: reduce) { .swipe-hint svg { animation: none; } }

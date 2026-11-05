@@ -5,8 +5,8 @@ FILES
   style.css    -> colours, fonts, sizes (colours are at the very top)
   script.js    -> your details are at the very top (RSVP number, venue, time)
   images/      -> the two logos
-  audio/       -> mumbai-ki-lehar.mp3 (background song; plays when guest taps Open Invitation,
-                  loops, round button top-right mutes it. Volume: MUSIC_VOLUME in script.js)
+  audio/       -> mumbai-ki-lehar.mp3 (background song; tries to play as soon as the page loads; if the browser blocks it,
+                  starts on the guest's first tap. Loops, round button top-right mutes it. Volume: MUSIC_VOLUME in script.js)
 
 HOW TO OPEN
   Just double-click index.html. (Opening animation works without any setup.)

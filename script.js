@@ -47,7 +47,7 @@ const main = document.getElementById("main");
 const openBtn = document.getElementById("openBtn");
 
 openBtn.addEventListener("click", function () {
-  playMusic();                         // the tap is what lets the browser play sound
+  playMusic();                         // makes sure the song is playing (no restart if it already is)
   main.classList.remove("hidden");     // show the invitation
   window.scrollTo(0, 0);
   intro.classList.add("leaving");      // fade the opening screen out
@@ -56,6 +56,7 @@ openBtn.addEventListener("click", function () {
     intro.style.display = "none";
     document.body.classList.remove("locked");   // allow scrolling again
     startScrollAnimation();
+    showSwipeHint();
   }, 950);
 });
 
@@ -215,9 +216,11 @@ document.getElementById("shareBtn")?.addEventListener("click", async function ()
 
 /* =========================================================
    11. BACKGROUND MUSIC  ("Mumbai Ki Lehar")
-   Starts when the guest taps "Open Invitation" (browsers block sound before a tap).
-   The round button at the top-right mutes / unmutes it.
-   To change the volume, edit MUSIC_VOLUME (0 = silent, 1 = full).
+   - Tries to start as soon as the page loads (before "Open Invitation").
+   - Phones/browsers often block sound until the guest touches the screen, so if it is
+     blocked, the song starts on the guest's FIRST tap / touch / key press, anywhere.
+   - The round button at the top-right mutes / unmutes it.
+   - Volume: edit MUSIC_VOLUME (0 = silent, 1 = full).
    ========================================================= */
 const MUSIC_VOLUME = 0.7;
 const music = document.getElementById("bgMusic");
@@ -241,24 +244,43 @@ function setMusicUI(playing) {
   musicBtn.setAttribute("aria-label", playing ? "Mute music" : "Play music");
 }
 
-function playMusic() {
-  musicBtn.classList.add("show");
-  musicWanted = true;
+// returns a promise; resolves if the song is playing afterwards
+function startMusic() {
+  if (!music.paused) { setMusicUI(true); return Promise.resolve(); }
   fadeMusicIn();
   const p = music.play();
-  if (p && p.catch) {
-    p.then(function () { setMusicUI(true); })
-     .catch(function () { setMusicUI(false); });   // blocked: guest can tap the button
-  } else {
-    setMusicUI(true);
+  if (p && p.then) {
+    return p.then(function () { setMusicUI(true); })
+            .catch(function (err) { setMusicUI(false); throw err; });
   }
+  setMusicUI(true);
+  return Promise.resolve();
 }
+
+// called when "Open Invitation" is tapped
+function playMusic() {
+  if (musicWanted) startMusic().catch(function () {});
+}
+
+// 1) try to play right away
+setMusicUI(false);
+startMusic().catch(function () {
+  // 2) blocked by the browser -> start on the guest's first touch / click / key press
+  const events = ["pointerup", "touchend", "click", "keydown"];
+  function startOnFirstTouch(e) {
+    if (e.target && e.target.closest && e.target.closest("#musicBtn")) return;   // the button has its own handler
+    if (!musicWanted) return;
+    startMusic().then(function () {
+      events.forEach(function (n) { document.removeEventListener(n, startOnFirstTouch, true); });
+    }).catch(function () {});
+  }
+  events.forEach(function (n) { document.addEventListener(n, startOnFirstTouch, true); });
+});
 
 musicBtn.addEventListener("click", function () {
   if (music.paused) {
     musicWanted = true;
-    fadeMusicIn();
-    music.play().then(function () { setMusicUI(true); }).catch(function () {});
+    startMusic().catch(function () {});
   } else {
     musicWanted = false;
     clearInterval(fadeTimer);
@@ -271,7 +293,25 @@ musicBtn.addEventListener("click", function () {
 document.addEventListener("visibilitychange", function () {
   if (document.hidden) {
     music.pause();
-  } else if (musicWanted && musicBtn.classList.contains("show")) {
-    music.play().catch(function () { setMusicUI(false); });
+  } else if (musicWanted && music.currentTime > 0) {
+    music.play().then(function () { setMusicUI(true); }).catch(function () { setMusicUI(false); });
   }
+});
+
+
+/* =========================================================
+   12. "SWIPE DOWN" ARROW  (shown on the first screen after opening)
+   ========================================================= */
+const swipeHint = document.getElementById("swipeHint");
+
+function showSwipeHint() {
+  if (window.scrollY < 60) swipeHint.classList.add("show");
+}
+
+window.addEventListener("scroll", function () {
+  if (window.scrollY > 60) swipeHint.classList.remove("show");
+}, { passive: true });
+
+swipeHint.addEventListener("click", function () {
+  window.scrollTo({ top: window.innerHeight * 0.95, behavior: "smooth" });
 });

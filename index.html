@@ -200,11 +200,10 @@
     <!-- 5. DESIGN PARTNER -->
     <section class="section partner">
       <p class="eyebrow pink reveal">Design Partner</p>
-      <p class="partner-name reveal">Ptraani</p>
 
       <!-- The logo is pink on white, so it sits on a white box -->
       <div class="partner-box reveal">
-        <img src="images/ptraani-logo.png" width="958" height="675" alt="Ptraani logo in Hindi and English" loading="lazy" />
+        <img src="images/ptraani-logo.png" width="768" height="384" alt="Ptraani by Nupur logo" loading="lazy" />
       </div>
 
       <p class="partner-line reveal">Proud Design Partner of the Women&rsquo;s Pro Volleyball League</p>
@@ -230,10 +229,17 @@
 
   <!-- Background song: "Mumbai Ki Lehar" (starts when the guest taps Open Invitation) -->
   <audio id="bgMusic" src="audio/mumbai-ki-lehar.mp3" loop preload="auto"></audio>
-  <button id="musicBtn" class="music-btn" type="button" aria-label="Mute music" aria-pressed="false">
+  <button id="musicBtn" class="music-btn show" type="button" aria-label="Play music" aria-pressed="true">
     <svg class="ic-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
     <svg class="ic-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 6"/><path d="m21 9-5 6"/></svg>
     <span class="music-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+  </button>
+
+  <!-- swipe-down arrow (appears on the first screen after opening) -->
+  <button id="swipeHint" class="swipe-hint" type="button" aria-label="Scroll down to see the details">
+    <span>Swipe down for details</span>
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
   </button>
 
   <!-- small message pop-up -->
